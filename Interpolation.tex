@@ -1,0 +1,76 @@
+\documentclass[12pt,a4paper]{scrartcl}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{indentfirst}
+\usepackage{misccorr}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{bm}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage[normalem]{ulem}
+\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+\author{А. А. Галиуллин}
+\lstset{
+	language=Python,
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+}
+\begin{document}
+	
+	\begin{center}
+	\Large
+	Интерполяция \\
+	\end{center}
+	\begin{center}
+		\large
+		Выполнил Галиуллин Арслан, 1 курс факультета физики, группа 171. \\
+		1233550v@mail.ru \\
+		Желаемая оценка - 10.
+	\end{center}
+	Задача - построить такую функцию, чтобы её значения в узлах интерполяции совпадали с данными значениями. \\
+	Это, очевидно, можно сделать многими способами. Я сделал двумя - вручную многочленом Лагранжа и при помощи встроенной в библиотеку scipy функции interp1d. \\
+	
+	\section{Многочлен Лагранжа}
+		$$L_N(x) = \sum_{k=0}^{N}c_k(x)*u_k, c_k(x) = \prod_{\begin{smallmatrix}i = 0\\i\neq л\end{smallmatrix}}^{N} \frac{x-x_i}{x_k-x_i}$$
+		$u_k$ - значение в узле, $x_j$ - узел.
+		\\ \\
+		\lstinputlisting{Interpolation_Lagrange.py}
+		
+		Вот пример нескольких функций:\\
+		Зелёные точки - данные значения, синяя линия - точная функция (из которой случайным образом брались значения в узлах), красная линия - полином Лагранжа.\\
+		\begin{center}
+			\includegraphics[scale=0.8]{figure_1} \\
+		\end{center}
+		 $\sigma = 3.6 \cdot 10^{-5}$ - среднеквадратичное отклонение. \\
+		\begin{center}
+			\includegraphics[scale=0.8]{figure_2} \\
+		\end{center}
+		$\sigma = 0.12$ \\
+		\begin{center}
+			\includegraphics[scale=0.8]{figure_3} \\
+		\end{center}
+		$\sigma = 0.24$
+		\begin{center}
+			\includegraphics[scale=0.8]{figure_4} \\
+		\end{center}
+		$\sigma = 1.3 \cdot 10^{-6}$
+	\section{Встроенная функция}
+	\lstinputlisting{Interpolation_System.py}
+	Тут точки соединяются многочленами третьей степени. \\
+	Функции: \\
+		\begin{center}
+			\includegraphics[scale=0.8]{figure_5} \\
+		\end{center}
+		$\sigma = 0.12$ \\
+		Виден недостаток этого метода: он плохо находит экстремумы. \\
+		\begin{center}
+			\includegraphics[scale=0.8]{figure_6} \\
+		\end{center}
+		$\sigma = 23$ - и погрешность больше. \\
+		
+		\section{Итог}
+			Без какой-нибудь практической задачи кажется, что интерполяция многочленом Лагранжа лучше встроенной функции.
+\end{document}
